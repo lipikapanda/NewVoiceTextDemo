@@ -20,8 +20,8 @@ restService.use(bodyParser.json());
 
 restService.post("/echo", function(req, res) {
 
-  var param = "AEs";
-  var inDrugName = req.body.queryResult.parameters.echoText;
+  var param = req.body.queryResult.parameters.casetype;;
+  var inDrugName = req.body.queryResult.parameters.drugname;
   var inAction = "year"
   var inDay = "-2"
 
@@ -58,12 +58,8 @@ restService.post("/echo", function(req, res) {
 
       });
 
-  var speech =
-      req.body.queryResult &&
-      req.body.queryResult.parameters &&
-      req.body.queryResult.parameters.echoText
-          ? req.body.queryResult.parameters.echoText + " - " + speech1
-          : "Seems like some problem. Speak again.";
+  var speech = req.body.queryResult.parameters.drugname + " - " + speech1;
+
 
   var speechResponse = {
     google: {
