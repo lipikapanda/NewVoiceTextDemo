@@ -25,7 +25,11 @@ restService.post("/echo", function(req, res) {
   var inDay = "-2"
 
 
-
+  superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDetails')
+      .query({ DrugName: inDrugName, szAction:inAction, szDay:inDay })
+      .end((err, res) => {
+      });
+      
 
   var speech =
       req.body.queryResult &&
@@ -48,7 +52,7 @@ restService.post("/echo", function(req, res) {
       }
     }
   };
-  
+
   return res.json({
     payload: speechResponse,
     //data: speechResponse,
