@@ -3,6 +3,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const superagent = require('superagent');
+
+global.speech1="";
+
 const restService = express();
 
 restService.use(
@@ -18,7 +22,7 @@ restService.post("/echo", function(req, res) {
       req.body.queryResult &&
       req.body.queryResult.parameters &&
       req.body.queryResult.parameters.echoText
-          ? req.body.queryResult.parameters.echoText
+          ? req.body.queryResult.parameters.echoText + speech1
           : "Seems like some problem. Speak again.";
 
   var speechResponse = {
