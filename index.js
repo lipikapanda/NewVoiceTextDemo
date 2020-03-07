@@ -21,7 +21,7 @@ restService.use(bodyParser.json());
 restService.post("/echo", function(req, res) {
 
   var param = "AEs";
-  var inDrugName = "humira"
+  var inDrugName = req.body.queryResult.parameters.echoText;
   var inAction = "year"
   var inDay = "-2"
 
