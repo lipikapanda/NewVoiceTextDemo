@@ -26,13 +26,15 @@ restService.post("/echo", function(req, res) {
     resolve(msg);
   });
 
+  promise1.then(function(value) {
+
 
 
   var speech =
       req.body.queryResult &&
       req.body.queryResult.parameters &&
       req.body.queryResult.parameters.echoText
-          ? req.body.queryResult.parameters.echoText + speech1
+          ? req.body.queryResult.parameters.echoText + value
           : "Seems like some problem. Speak again.";
 
   var speechResponse = {
@@ -57,6 +59,8 @@ restService.post("/echo", function(req, res) {
     speech: speech,
     displayText: speech,
     source: "webhook-echo-sample"
+  });
+
   });
 });
 
