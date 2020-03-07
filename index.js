@@ -32,7 +32,7 @@ restService.post("/echo", function(req, res) {
         var result = res.text;
 
         if (result.includes("Record Not Found")){
-            speech1 = "Record Not Found for drug " + inDrugName;
+            speech1 = "Record not found for drug " + inDrugName;
             return;
         }
 
@@ -62,7 +62,7 @@ restService.post("/echo", function(req, res) {
       req.body.queryResult &&
       req.body.queryResult.parameters &&
       req.body.queryResult.parameters.echoText
-          ? req.body.queryResult.parameters.echoText + speech1
+          ? req.body.queryResult.parameters.echoText + " - " + speech1
           : "Seems like some problem. Speak again.";
 
   var speechResponse = {
