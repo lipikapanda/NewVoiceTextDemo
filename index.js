@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const superagent = require('superagent');
 
 global.speech1="";
-global.speech = "";
+
 
 const restService = express();
 
@@ -88,7 +88,7 @@ restService.post("/echo", function(req, res) {
 });
 
 setTimeout(function afterTwoSeconds() {
-  speech = "123"
+  
 }, 5000)
 
 restService.post("/audio", function(req, res) {
