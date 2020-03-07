@@ -87,9 +87,7 @@ restService.post("/echo", function(req, res) {
   });
 });
 
-setTimeout(function afterTwoSeconds() {
 
-}, 5000)
 
 restService.post("/audio", function(req, res) {
   var speech = "";
