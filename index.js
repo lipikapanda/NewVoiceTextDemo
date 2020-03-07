@@ -31,6 +31,11 @@ restService.post("/echo", function(req, res) {
 
         var result = res.text;
 
+        if (result.includes("Record Not Found")){
+            speech1 = "Record Not Found for drug " + inDrugName;
+            return;
+        }
+
         const arrList = result.replace("[{","}]").split("}]")[1].split(",");
         var strDrugName = arrList[0].split(":")[1];
         var strAE = arrList[1].split(":")[1];
