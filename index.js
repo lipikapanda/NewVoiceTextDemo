@@ -18,6 +18,15 @@ restService.use(
 restService.use(bodyParser.json());
 
 restService.post("/echo", function(req, res) {
+
+  var param = "AEs";
+  var inDrugName = "GOLIMUMAB"
+  var inAction = "year"
+  var inDay = "-2"
+
+
+  setTimeout(function afterTwoSeconds() {
+
   var speech =
       req.body.queryResult &&
       req.body.queryResult.parameters &&
@@ -39,7 +48,7 @@ restService.post("/echo", function(req, res) {
       }
     }
   };
-
+  }, 5000)
   return res.json({
     payload: speechResponse,
     //data: speechResponse,
