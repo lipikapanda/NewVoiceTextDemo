@@ -25,7 +25,7 @@ restService.post("/echo", function(req, res) {
   var inDay = "-2"
 
 
-  setTimeout(function afterTwoSeconds() {
+
 
   var speech =
       req.body.queryResult &&
@@ -48,7 +48,7 @@ restService.post("/echo", function(req, res) {
       }
     }
   };
-  }, 5000)
+  
   return res.json({
     payload: speechResponse,
     //data: speechResponse,
