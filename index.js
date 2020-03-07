@@ -17,11 +17,11 @@ restService.use(bodyParser.json());
 
 restService.post("/echo", function(req, res) {
 
-  const param = "death";
-  const inDrugName = "Humira";
-  const inAction = "year";
-  const inDay = "-2";
-  let speech1 = "";
+  var param = "death";
+  var inDrugName = "Humira";
+  var inAction = "year";
+  var inDay = "-2";
+  var speech1 = "";
 
   superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDetails')
       .query({ DrugName: inDrugName, szAction:inAction, szDay:inDay })
@@ -48,40 +48,43 @@ restService.post("/echo", function(req, res) {
             speech1 = strAE + " AE's have been reported for drug " + strDrugName + " in last 2 years";
             break;
         }
+
+
+        var speech =
+            req.body.queryResult &&
+            req.body.queryResult.parameters &&
+            req.body.queryResult.parameters.echoText
+                ? req.body.queryResult.parameters.echoText + speech1
+                : "Seems like some problem. Speak again.";
+
+        var speechResponse = {
+          google: {
+            expectUserResponse: true,
+            richResponse: {
+              items: [
+                {
+                  simpleResponse: {
+                    textToSpeech: speech
+                  }
+                }
+              ]
+            }
+          }
+        };
+
+        return res.json({
+          payload: speechResponse,
+          //data: speechResponse,
+          fulfillmentText: speech,
+          speech: speech,
+          displayText: speech,
+          source: "webhook-echo-sample"
+        });
       });
 
 
 
-  var speech =
-    req.body.queryResult &&
-    req.body.queryResult.parameters &&
-    req.body.queryResult.parameters.echoText
-      ? req.body.queryResult.parameters.echoText + speech1
-      : "Seems like some problem. Speak again.";
-  
-  var speechResponse = {
-    google: {
-      expectUserResponse: true,
-      richResponse: {
-        items: [
-          {
-            simpleResponse: {
-              textToSpeech: speech
-            }
-          }
-        ]
-      }
-    }
-  };
-  
-  return res.json({
-    payload: speechResponse,
-    //data: speechResponse,
-    fulfillmentText: speech,
-    speech: speech,
-    displayText: speech,
-    source: "webhook-echo-sample"
-  });
+
 });
 
 restService.post("/audio", function(req, res) {

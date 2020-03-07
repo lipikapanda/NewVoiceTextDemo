@@ -1,10 +1,12 @@
 "use strict"
 const superagent = require('superagent');
-var param = "AEs";
-var speech;
-var inDrugName = "GOLIMUMAB"
-var inAction = "year"
-var inDay = "-2"
+
+var param = "death";
+var inDrugName = "Humira";
+var inAction = "year";
+var inDay = "-2";
+
+let speech1;
 
 superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDetails')
     .query({ DrugName: inDrugName, szAction:inAction, szDay:inDay })
@@ -20,16 +22,19 @@ superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDeta
 
         switch(param){
             case "death":
-                speech = strDeath + " death cases have been reported for drug " + strDrugName + " in last 2 years";
+                speech1 = strDeath + " death cases have been reported for drug " + strDrugName + " in last 2 years";
                 break;
 
             case "serious":
-                speech = strSerious + " serious cases have been reported for drug " + strDrugName + " in last 2 years";
+                speech1 = strSerious + " serious cases have been reported for drug " + strDrugName + " in last 2 years";
                 break;
 
             case "AEs":
-                speech = strAE + " AE's have been reported for drug " + strDrugName + " in last 2 years";
+                speech1 = strAE + " AE's have been reported for drug " + strDrugName + " in last 2 years";
                 break;
         }
-        console.log(speech);
+        console.log("in" + speech1);
     });
+
+console.log(("out" + speech1))
+
