@@ -20,52 +20,6 @@ restService.use(bodyParser.json());
 
 restService.post("/echo", function(req, res) {
 
-
-
-  const promise1 = new Promise(function(resolve, reject) {
-    resolve(msg);
-  });
-
-  promise1.then(function(value) {
-
-
-
-  var speech =
-      req.body.queryResult &&
-      req.body.queryResult.parameters &&
-      req.body.queryResult.parameters.echoText
-          ? req.body.queryResult.parameters.echoText + value
-          : "Seems like some problem. Speak again.";
-
-  var speechResponse = {
-    google: {
-      expectUserResponse: true,
-      richResponse: {
-        items: [
-          {
-            simpleResponse: {
-              textToSpeech: speech
-            }
-          }
-        ]
-      }
-    }
-  };
-
-  return res.json({
-    payload: speechResponse,
-    //data: speechResponse,
-    fulfillmentText: speech,
-    speech: speech,
-    displayText: speech,
-    source: "webhook-echo-sample"
-  });
-
-  });
-});
-
-async function msg(){
-
   var param = "AEs";
   var inDrugName = "humira"
   var inAction = "year"
@@ -98,11 +52,38 @@ async function msg(){
         }
 
       });
-  setTimeout(function afterTwoSeconds() {
-    return speech1;
-  }, 5000)
 
-}
+  var speech =
+      req.body.queryResult &&
+      req.body.queryResult.parameters &&
+      req.body.queryResult.parameters.echoText
+          ? req.body.queryResult.parameters.echoText + speech1
+          : "Seems like some problem. Speak again.";
+
+  var speechResponse = {
+    google: {
+      expectUserResponse: true,
+      richResponse: {
+        items: [
+          {
+            simpleResponse: {
+              textToSpeech: speech
+            }
+          }
+        ]
+      }
+    }
+  };
+
+  return res.json({
+    payload: speechResponse,
+    //data: speechResponse,
+    fulfillmentText: speech,
+    speech: speech,
+    displayText: speech,
+    source: "webhook-echo-sample"
+  });
+});
 
 restService.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening");
