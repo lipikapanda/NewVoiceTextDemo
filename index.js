@@ -23,7 +23,7 @@ restService.post("/echo", function(req, res) {
   var param = req.body.queryResult.parameters.casetype;;
   var inDrugName = req.body.queryResult.parameters.drugname;
   var inAction = "year"
-  var inDay = "-2"
+  var inDay = "-"+req.body.queryResult.parameters[duration.amount];
 
   superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDetails')
       .query({ DrugName: inDrugName, szAction:inAction, szDay:inDay })
@@ -44,15 +44,15 @@ restService.post("/echo", function(req, res) {
 
         switch(param){
           case "death":
-            speech1 = strDeath + " death cases have been reported for drug " + strDrugName + " in last 5 years";
+            speech1 = strDeath + " death cases have been reported for drug " + strDrugName + " in last "+ inDay + " years";
             break;
 
           case "serious":
-            speech1 = strSerious + " serious cases have been reported for drug " + strDrugName + " in last 5 years";
+            speech1 = strSerious + " serious cases have been reported for drug " + strDrugName + " in last "+inDay+" years";
             break;
 
           case "AEs":
-            speech1 = strAE + " AE's have been reported for drug " + strDrugName + " in last 5 years";
+            speech1 = strAE + " AE's have been reported for drug " + strDrugName + " in last "+inDay+" years";
             break;
         }
 
