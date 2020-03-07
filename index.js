@@ -60,7 +60,7 @@ restService.post("/echo", function(req, res) {
   });
 });
 
-function msg(){
+async function msg(){
 
   var param = "AEs";
   var inDrugName = "humira"
@@ -94,7 +94,10 @@ function msg(){
         }
 
       });
-  return speech1;
+  setTimeout(function afterTwoSeconds() {
+    return speech1;
+  }, 5000)
+
 }
 
 restService.listen(process.env.PORT || 8000, function() {
