@@ -55,7 +55,7 @@ restService.post("/echo", function(req, res) {
 
       });
 
-
+  await sleep(5000);
   var speech =
       req.body.queryResult &&
       req.body.queryResult.parameters &&
