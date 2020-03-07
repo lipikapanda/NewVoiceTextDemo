@@ -40,15 +40,15 @@ restService.post("/echo", function(req, res) {
 
         switch(param){
           case "death":
-            speech1 = strDeath + " death cases have been reported for drug " + strDrugName + " in last 2 years";
+            speech1 = strDeath + " death cases have been reported for drug " + strDrugName + " in last 5 years";
             break;
 
           case "serious":
-            speech1 = strSerious + " serious cases have been reported for drug " + strDrugName + " in last 2 years";
+            speech1 = strSerious + " serious cases have been reported for drug " + strDrugName + " in last 5 years";
             break;
 
           case "AEs":
-            speech1 = strAE + " AE's have been reported for drug " + strDrugName + " in last 2 years";
+            speech1 = strAE + " AE's have been reported for drug " + strDrugName + " in last 5 years";
             break;
         }
 
@@ -88,7 +88,7 @@ restService.post("/echo", function(req, res) {
 });
 
 setTimeout(function afterTwoSeconds() {
-  
+
 }, 5000)
 
 restService.post("/audio", function(req, res) {
