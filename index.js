@@ -78,10 +78,6 @@ restService.post("/echo", function(req, res) {
     }
   };
 
-  setTimeout(function afterTwoSeconds() {
-    temp = "2"
-  }, 5000)
-
   return res.json({
     payload: speechResponse,
     //data: speechResponse,
