@@ -22,8 +22,8 @@ restService.post("/echo", function(req, res) {
 
   var param = req.body.queryResult.parameters.casetype;;
   var inDrugName = req.body.queryResult.parameters.drugname;
-  var inAction = "year"
-  var inDay = "-"+req.body.queryResult.parameters[duration.amount];
+  var inAction = "year";
+  var inDay = "-1";
 
   superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDetails')
       .query({ DrugName: inDrugName, szAction:inAction, szDay:inDay })
