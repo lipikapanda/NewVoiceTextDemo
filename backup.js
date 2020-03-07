@@ -1,6 +1,6 @@
 "use strict"
 const superagent = require('superagent');
-global.speech="";
+global.speech2="";
 
 var param = "AEs";
 var inDrugName = "GOLIMUMAB"
@@ -21,20 +21,20 @@ superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDeta
 
         switch(param){
             case "death":
-                speech = strDeath + " death cases have been reported for drug " + strDrugName + " in last 2 years";
+                speech2 = strDeath + " death cases have been reported for drug " + strDrugName + " in last 2 years";
                 break;
 
             case "serious":
-                speech = strSerious + " serious cases have been reported for drug " + strDrugName + " in last 2 years";
+                speech2 = strSerious + " serious cases have been reported for drug " + strDrugName + " in last 2 years";
                 break;
 
             case "AEs":
-                speech = strAE + " AE's have been reported for drug " + strDrugName + " in last 2 years";
+                speech2 = strAE + " AE's have been reported for drug " + strDrugName + " in last 2 years";
                 break;
         }
-        console.log(speech);
+        console.log(speech2);
     });
 
 setTimeout(function afterTwoSeconds() {
-    console.log("out"+speech);
+    console.log("out"+speech2);
 }, 5000)
