@@ -55,35 +55,35 @@ restService.post("/echo", function(req, res) {
             speech1 = strAE + " AE's have been reported for drug " + strDrugName + " in last "+inDay+" years";
             break;
         }
-          var speech = req.body.queryResult.parameters.drugname + " - " + speech1;
 
-
-          var speechResponse = {
-              google: {
-                  expectUserResponse: true,
-                  richResponse: {
-                      items: [
-                          {
-                              simpleResponse: {
-                                  textToSpeech: speech
-                              }
-                          }
-                      ]
-                  }
-              }
-          };
-
-          return res.json({
-              payload: speechResponse,
-              //data: speechResponse,
-              fulfillmentText: speech,
-              speech: speech,
-              displayText: speech,
-              source: "webhook-echo-sample"
-          });
       });
 
+  var speech = req.body.queryResult.parameters.drugname + " - " + speech1;
 
+
+  var speechResponse = {
+    google: {
+      expectUserResponse: true,
+      richResponse: {
+        items: [
+          {
+            simpleResponse: {
+              textToSpeech: speech
+            }
+          }
+        ]
+      }
+    }
+  };
+
+  return res.json({
+    payload: speechResponse,
+    //data: speechResponse,
+    fulfillmentText: speech,
+    speech: speech,
+    displayText: speech,
+    source: "webhook-echo-sample"
+  });
 });
 
 restService.listen(process.env.PORT || 8000, function() {
