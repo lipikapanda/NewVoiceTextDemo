@@ -7,7 +7,7 @@ const superagent = require('superagent');
 
 global.speech1="";
 
-
+global.speech="";
 const restService = express();
 
 restService.use(
@@ -55,26 +55,25 @@ restService.post("/echo", function(req, res) {
             speech1 = strAE + " AE's have been reported for drug " + strDrugName + " in last "+inDay+" years";
             break;
         }
+          var speech = req.body.queryResult.parameters.drugname + " - " + speech1;
 
+
+          var speechResponse = {
+              google: {
+                  expectUserResponse: true,
+                  richResponse: {
+                      items: [
+                          {
+                              simpleResponse: {
+                                  textToSpeech: speech
+                              }
+                          }
+                      ]
+                  }
+              }
+          };
       });
 
-  var speech = req.body.queryResult.parameters.drugname + " - " + speech1;
-
-
-  var speechResponse = {
-    google: {
-      expectUserResponse: true,
-      richResponse: {
-        items: [
-          {
-            simpleResponse: {
-              textToSpeech: speech
-            }
-          }
-        ]
-      }
-    }
-  };
 
   return res.json({
     payload: speechResponse,
