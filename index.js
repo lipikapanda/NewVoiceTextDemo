@@ -70,21 +70,24 @@ restService.post("/echo", function(req, res) {
         var speech = req.body.queryResult.parameters.drugname + " - " + speech1;
 
     })();
-    
-    var speechResponse = {
-        google: {
-            expectUserResponse: true,
-            richResponse: {
-                items: [
-                    {
-                        simpleResponse: {
-                            textToSpeech: speech
+
+    setTimeout(function afterTwoSeconds() {
+        var speechResponse = {
+            google: {
+                expectUserResponse: true,
+                richResponse: {
+                    items: [
+                        {
+                            simpleResponse: {
+                                textToSpeech: speech
+                            }
                         }
-                    }
-                ]
+                    ]
+                }
             }
-        }
-    };
+        };
+
+    }, 5000)
 
   return res.json({
     payload: speechResponse,
