@@ -19,29 +19,18 @@ restService.use(
 
 restService.use(bodyParser.json());
 
-restService.post("/echo", function(req, res) {
 
-  var param = req.body.queryResult.parameters.casetype;;
-  var inDrugName = req.body.queryResult.parameters.drugname;
-  var inAction = "year";
-  var inDay = "-1";
-
-
-    function getProjectParameterValue(projectId, parameter) {
-
-        return new Promise(function(resolve, reject) {
-            superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDetails')
-                .query({DrugName: inDrugName, szAction: inAction, szDay: inDay})
-                .then(response => {
-                    return response.text
-                })
-                .then(result => {
-                    resolve(result)
-                });
-        });
-    }
 
     (async () => {
+
+        restService.post("/echo", function(req, res) {
+
+            var param = req.body.queryResult.parameters.casetype;;
+            var inDrugName = req.body.queryResult.parameters.drugname;
+            var inAction = "year";
+            var inDay = "-1";
+
+
         const responseBody = await getProjectParameterValue("myProjectId", "someParameter")
         console.log(responseBody);
 
@@ -69,30 +58,47 @@ restService.post("/echo", function(req, res) {
 
         var speech = req.body.queryResult.parameters.drugname + " - " + speech1;
 
-    })();
 
-  return res.json({
-    payload: {
-        google: {
-            expectUserResponse: true,
-            richResponse: {
-                items: [
-                    {
-                        simpleResponse: {
-                            textToSpeech: speech
+            return res.json({
+                payload: {
+                    google: {
+                        expectUserResponse: true,
+                        richResponse: {
+                            items: [
+                                {
+                                    simpleResponse: {
+                                        textToSpeech: speech
+                                    }
+                                }
+                            ]
                         }
                     }
-                ]
-            }
-        }
-    },
-    //data: speechResponse,
-    fulfillmentText: speech,
-    speech: speech,
-    displayText: speech,
-    source: "webhook-echo-sample"
-  });
-});
+                },
+                //data: speechResponse,
+                fulfillmentText: speech,
+                speech: speech,
+                displayText: speech,
+                source: "webhook-echo-sample"
+            });
+        });
+        
+    })();
+
+
+
+function getProjectParameterValue(projectId, parameter) {
+
+    return new Promise(function(resolve, reject) {
+        superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDetails')
+            .query({DrugName: inDrugName, szAction: inAction, szDay: inDay})
+            .then(response => {
+                return response.text
+            })
+            .then(result => {
+                resolve(result)
+            });
+    });
+}
 
 restService.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening");
