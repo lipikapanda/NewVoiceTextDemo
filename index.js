@@ -5,9 +5,10 @@ const bodyParser = require("body-parser");
 
 const superagent = require('superagent');
 
-global.speech1="";
+global.speech1="b";
+global.speech="a";
 
-global.speech="";
+
 const restService = express();
 
 restService.use(
@@ -25,55 +26,65 @@ restService.post("/echo", function(req, res) {
   var inAction = "year";
   var inDay = "-1";
 
-  superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDetails')
-      .query({ DrugName: inDrugName, szAction:inAction, szDay:inDay })
-      .end((err, res) => {
 
-        var result = res.text;
+    function getProjectParameterValue(projectId, parameter) {
 
-        if (result.includes("Record Not Found")){
-            speech1 = "Record not found for drug " + inDrugName;
-            return;
-        }
+        return new Promise(function(resolve, reject) {
+            superagent.get('http://103.224.243.38/3Analytics/WS_VoiceResult.asmx/GetDrugDetails')
+                .query({DrugName: inDrugName, szAction: inAction, szDay: inDay})
+                .then(response => {
+                    return response.text
+                })
+                .then(result => {
+                    resolve(result)
+                });
+        });
+    }
 
-        const arrList = result.replace("[{","}]").split("}]")[1].split(",");
+    (async () => {
+        const responseBody = await getProjectParameterValue("myProjectId", "someParameter")
+        console.log(responseBody);
+
+
+        var result = responseBody;
+        const arrList = result.replace("[{","}]").split("}]")[1].split(",")
         var strDrugName = arrList[0].split(":")[1];
         var strAE = arrList[1].split(":")[1];
         var strSerious = arrList[2].split(":")[1];
         var strDeath = arrList[3].split(":")[1];
 
         switch(param){
-          case "death":
-            speech1 = strDeath + " death cases have been reported for drug " + strDrugName + " in last "+ inDay + " years";
-            break;
+            case "death":
+                speech1 = strDeath + " death cases have been reported for drug " + strDrugName + " in last 2 years";
+                break;
 
-          case "serious":
-            speech1 = strSerious + " serious cases have been reported for drug " + strDrugName + " in last "+inDay+" years";
-            break;
+            case "serious":
+                speech1 = strSerious + " serious cases have been reported for drug " + strDrugName + " in last 2 years";
+                break;
 
-          case "AEs":
-            speech1 = strAE + " AE's have been reported for drug " + strDrugName + " in last "+inDay+" years";
-            break;
+            case "AEs":
+                speech1 = strAE + " AE's have been reported for drug " + strDrugName + " in last 2 years";
+                break;
         }
-          var speech = req.body.queryResult.parameters.drugname + " - " + speech1;
 
+        var speech = req.body.queryResult.parameters.drugname + " - " + speech1;
 
-          var speechResponse = {
-              google: {
-                  expectUserResponse: true,
-                  richResponse: {
-                      items: [
-                          {
-                              simpleResponse: {
-                                  textToSpeech: speech
-                              }
-                          }
-                      ]
-                  }
-              }
-          };
-      });
-
+    })();
+    
+    var speechResponse = {
+        google: {
+            expectUserResponse: true,
+            richResponse: {
+                items: [
+                    {
+                        simpleResponse: {
+                            textToSpeech: speech
+                        }
+                    }
+                ]
+            }
+        }
+    };
 
   return res.json({
     payload: speechResponse,
