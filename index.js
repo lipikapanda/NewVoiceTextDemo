@@ -71,26 +71,21 @@ restService.post("/echo", function(req, res) {
 
     })();
 
-    setTimeout(function afterTwoSeconds() {
-        var speechResponse = {
-            google: {
-                expectUserResponse: true,
-                richResponse: {
-                    items: [
-                        {
-                            simpleResponse: {
-                                textToSpeech: speech
-                            }
-                        }
-                    ]
-                }
-            }
-        };
-
-    }, 5000)
-
   return res.json({
-    payload: speechResponse,
+    payload: {
+        google: {
+            expectUserResponse: true,
+            richResponse: {
+                items: [
+                    {
+                        simpleResponse: {
+                            textToSpeech: speech
+                        }
+                    }
+                ]
+            }
+        }
+    },
     //data: speechResponse,
     fulfillmentText: speech,
     speech: speech,
