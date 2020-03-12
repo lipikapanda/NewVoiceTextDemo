@@ -23,7 +23,7 @@ restService.use(bodyParser.json());
 
     (async () => {
 
-        restService.post("/echo", function(req, res) {
+       await restService.post("/echo", function(req, res) {
 
             var param = req.body.queryResult.parameters.casetype;;
             var inDrugName = req.body.queryResult.parameters.drugname;
@@ -31,8 +31,7 @@ restService.use(bodyParser.json());
             var inDay = "-1";
 
 
-        const responseBody = await getProjectParameterValue("myProjectId", "someParameter")
-        console.log(responseBody);
+        const responseBody = getProjectParameterValue("myProjectId", "someParameter");
 
 
         var result = responseBody;
@@ -81,7 +80,7 @@ restService.use(bodyParser.json());
                 source: "webhook-echo-sample"
             });
         });
-        
+
     })();
 
 
